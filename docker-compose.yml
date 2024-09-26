@@ -1,0 +1,27 @@
+services:
+    node:
+        image: will871/node:1.0
+        build: 
+            dockerfile: Dockerfile
+        container_name: desafio-senneliquor-node
+        environment:
+            - NODE_ENV=development
+            - SERVER_PORT=8080
+            - DB_HOST=mongo
+            - DB_PORT=27017
+            - DB_USERNAME=senneliquor
+            - DB_PASSWORD=senneliquor
+        volumes:
+            - ./:/var/www/app
+        ports:
+            - 8080:8080
+        tty: true
+
+    mongo:
+        image: mongo:latest
+        container_name: desafio-senneliquor-mongo
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=senneliquor
+            - MONGO_INITDB_ROOT_PASSWORD=senneliquor
+        ports:
+            - 27017:27017
