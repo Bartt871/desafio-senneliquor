@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Docker: Debug tests",
+            "address": "127.0.0.1",
+            "port": 9229,
+            "trace": true,
+            "restart": true,
+            "timeout": 999999,
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/var/www/app",
+            "outFiles": [
+                "${workspaceFolder}/dist/**/*.js",
+                "${workspaceFolder}/dist/**/*.js.map" // Certifique-se de incluir isso
+            ],
+            "sourceMaps": true,
+            "internalConsoleOptions": "neverOpen",
+            "continueOnAttach": true
+        }
+    ]
+}

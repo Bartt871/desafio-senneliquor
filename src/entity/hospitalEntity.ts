@@ -11,17 +11,17 @@ const HospitalSchema: Schema<IHospital> = new Schema({
     name: {
         type: String,
         required: true,
-        comment: "NOME DO HOSPITAL",
+        comment: "Nome",
     },
     latitude: {
         type: Number,
         required: true,
-        comment: "LATITUDE HOSPITAL",
+        comment: "Latitude",
     },
     longitude: {
         type: Number,
         required: true,
-        comment: "LONGITUDE HOSPITAL",
+        comment: "Longitude",
     },
 }, { timestamps: true });
 

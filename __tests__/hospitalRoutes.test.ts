@@ -1,10 +1,13 @@
-import request from 'supertest';
 import { appCreator } from '../src/appCreator';
+import { faker } from '@faker-js/faker/locale/pt_BR';
+
+import request from 'supertest';
 import mongoose from 'mongoose';
 
 const app = appCreator();
 
 beforeAll(async () => {
+    jest.setTimeout(Infinity);
     await mongoose.connect(`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}`, { dbName: process.env.DB_NAME });
 });
 
@@ -12,12 +15,12 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
-describe('Hospitals API', () => {
-    it('should create a new hospital', async () => {
+describe('Hospitals', () => {
+    it('create_hospital', async () => {
         const hospitalData = {
-            name: 'Hospital Central',
-            latitude: -23.550520,
-            longitude: -46.633308,
+            name: faker.company.name(),
+            latitude: faker.location.latitude(),
+            longitude: faker.location.longitude(),
         };
 
         const response = await request(app)
