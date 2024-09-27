@@ -1,23 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import { ParamsDictionary } from "express-serve-static-core";
+import { StartSessionBody } from '../../../action/Session/StartSession';
 
 import validator from 'validator';
 import ValidationException from '../../../exception/validationException';
 
-interface StartSessionBody {
-    username?: string;
-    password?: string;
-}
-
 export const StartSessionMiddleware = (
-    request: Request<ParamsDictionary, any, StartSessionBody>,
+    request: Request<any, any, StartSessionBody>,
     response: Response,
     next: NextFunction
 ): void => {
-    const {
-        username,
-        password
-    } = request.body;
+    const { username, password } = request.body;
 
     if (!username) {
         throw new ValidationException('username é obrigatório');
