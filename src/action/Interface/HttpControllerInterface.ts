@@ -1,3 +1,3 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-export type HttpControllerInterface = (request: Request, response: Response) => Promise<void>;
+export type HttpControllerInterface = (request: Request, response: Response, next: NextFunction) => Promise<void>;

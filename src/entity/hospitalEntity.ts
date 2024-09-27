@@ -1,4 +1,3 @@
-// models/Hospital.ts
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IHospital extends Document {
@@ -11,7 +10,7 @@ const HospitalSchema: Schema<IHospital> = new Schema({
     name: {
         type: String,
         required: true,
-        comment: "Nome",
+        comment: "Name",
     },
     latitude: {
         type: Number,
