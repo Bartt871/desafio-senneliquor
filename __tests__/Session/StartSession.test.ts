@@ -27,11 +27,11 @@ describe('StartSession', () => {
     });
 
     it('StartSession_success', async () => {
-        const password = faker.internet.password();
+        const password = faker.internet.password({ length: 8 });
 
         const doctor = new DoctorEntity({
             name: faker.person.fullName(),
-            username: faker.internet.userName(),
+            username: 'william.barreto',
             password: await bcrypt.hash(password, 10)
         });
 
@@ -58,21 +58,21 @@ describe('StartSession', () => {
         expect(tokenInformations.logged_id).toBe(doctorId);
         expect(tokenInformations.name).toBe(doctor.name);
         expect(tokenInformations.session_type).toBe('doctor');
-        
+
     });
 
     it('startsession_error_incorrect_doctor_password', async () => {
         const doctor = new DoctorEntity({
             name: faker.person.fullName(),
-            username: faker.internet.userName(),
-            password: await bcrypt.hash(faker.internet.password(), 10)
+            username: 'william.barreto',
+            password: await bcrypt.hash(faker.internet.password({ length: 8 }), 10)
         });
 
         await doctor.save();
 
         const payload = {
             username: doctor.username,
-            password: faker.internet.password()
+            password: faker.internet.password({ length: 8 })
         };
 
         const response = await request(app as Express)
@@ -86,8 +86,8 @@ describe('StartSession', () => {
 
     it('StartSession_error_doctor_username_not_found', async () => {
         const payload = {
-            username: faker.internet.userName(),
-            password: faker.internet.password()
+            username: 'william.barreto',
+            password: faker.internet.password({ length: 8 })
         };
 
         const response = await request(app as Express)
