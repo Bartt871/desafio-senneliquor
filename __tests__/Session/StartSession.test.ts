@@ -1,6 +1,8 @@
 import { appCreator } from '../../src/appCreator';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
+import { verifyToken } from '../../src/service/jwtToken';
+import { DoctorSession } from '../../src/types/session';
 
 import bcrypt from 'bcrypt';
 import request from 'supertest';
@@ -46,6 +48,17 @@ describe('StartSession', () => {
             .set('Content-Type', 'application/json');
 
         expect(response.status).toBe(200);
+
+        const doctorId = doctor._id.toString();
+
+        expect(response.body.logged_id).toBe(doctorId);
+
+        const tokenInformations = verifyToken<DoctorSession>(response.body.token);
+
+        expect(tokenInformations.logged_id).toBe(doctorId);
+        expect(tokenInformations.name).toBe(doctor.name);
+        expect(tokenInformations.session_type).toBe('doctor');
+        
     });
 
     it('startsession_error_incorrect_doctor_password', async () => {

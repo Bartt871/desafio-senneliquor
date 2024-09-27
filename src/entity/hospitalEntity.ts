@@ -1,6 +1,7 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, ObjectId, Schema } from 'mongoose';
 
 export interface IHospital extends Document {
+    _id: ObjectId;
     name: string;
     latitude: number;
     longitude: number;

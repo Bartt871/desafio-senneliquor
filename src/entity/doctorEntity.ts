@@ -1,6 +1,7 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, ObjectId, Schema } from 'mongoose';
 
 export interface IDoctor extends Document {
+    _id: ObjectId;
     name: string;
     username: string;
     password: string;
