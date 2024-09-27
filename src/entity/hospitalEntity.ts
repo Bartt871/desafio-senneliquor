@@ -24,6 +24,6 @@ const HospitalSchema: Schema<IHospital> = new Schema({
     },
 }, { timestamps: true });
 
-const HospitalEntity = mongoose.model<IHospital>('Hospital', HospitalSchema);
+const HospitalEntity = mongoose.model<IHospital>('hospital', HospitalSchema);
 
 export default HospitalEntity;

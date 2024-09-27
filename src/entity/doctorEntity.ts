@@ -25,6 +25,6 @@ const DoctorSchema: Schema<IDoctor> = new Schema({
     }
 }, { timestamps: true });
 
-const DoctorEntity = mongoose.model<IDoctor>('Doctor', DoctorSchema);
+const DoctorEntity = mongoose.model<IDoctor>('doctor', DoctorSchema);
 
 export default DoctorEntity;
