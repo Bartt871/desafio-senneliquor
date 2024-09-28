@@ -1,12 +1,17 @@
-import TaskEntity, { ITask, Status } from "../entity/taskEntity";
+import TaskEntity, { CareCategory, ITask, Status } from "../entity/taskEntity";
 
 class Task {
     static async filterTask(
         page: number,
         pageSize: number,
+        careCategories?: CareCategory[],
         statuses?: Status[]
     ): Promise<{ total: number; tasks: ITask[]; }> {
         const filter: any = {};
+
+        if (careCategories) {
+            filter.care_category = { $in: careCategories };
+        }
 
         if (statuses) {
             filter.status = { $in: statuses };
