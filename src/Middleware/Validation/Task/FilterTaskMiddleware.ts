@@ -8,7 +8,7 @@ export const FilterTaskMiddleware = (
     response: Response,
     next: NextFunction
 ): void => {
-    let {
+    const {
         statuses,
         care_categories: careCategories,
         page,
@@ -36,17 +36,11 @@ export const FilterTaskMiddleware = (
     }
 
     if (!page) {
-        page = 1;
+        request.body.page = 1;
     }
 
     if (!pageSize) {
-        pageSize = 10;
-    }
-
-    request.body = {
-        ...request.body,
-        page: page,
-        page_size: pageSize
+        request.body.page_size = 10;
     }
 
     next();

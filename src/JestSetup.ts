@@ -19,12 +19,10 @@ export const closeConnection = async () => {
 export const recreateApp = async () => {
     await closeConnection();
     app = await appCreator();
+};
 
-    const clearDatabase = async () => {
-        await DoctorEntity.deleteMany({});
-        await TaskEntity.deleteMany({});
-        await HospitalEntity.deleteMany({});
-    }
-
-    await clearDatabase();
+export const clearDatabase = async () => {
+    await DoctorEntity.deleteMany({});
+    await TaskEntity.deleteMany({});
+    await HospitalEntity.deleteMany({});
 };

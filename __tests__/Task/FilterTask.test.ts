@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
-import { app, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
+import { app, clearDatabase, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
 
 import request from 'supertest';
 import TaskEntity, { ITask } from '../../src/Entity/TaskEntity';
@@ -12,6 +12,8 @@ afterAll(async () => await closeConnection());
 beforeEach(async () => await recreateApp());
 
 describe('FilterTask', () => {
+    beforeEach(async () => await clearDatabase());
+
     it('FilterTask_success', async () => {
         const expectedTotal = 10;
 
@@ -173,5 +175,56 @@ describe('FilterTask', () => {
         expect(response.body.total).toBe(expectedTotal);
         expect(response.body.tasks.length).toBe(expectedTotal);
         expect(response.body.tasks.map((task: ITask) => task.care_category)).toContain(1);
+    });
+
+    it('FilterTask_filter_search_success', async () => {
+        const expectedTotal = 1;
+        const expectedPatientName = 'Jéssica da sélva';
+
+        const hospitalId = (await new HospitalEntity({
+            name: faker.company.name(),
+            latitude: faker.location.latitude(),
+            longitude: faker.location.longitude()
+        }).save())._id;
+
+        const doctorId = (await new DoctorEntity({
+            name: faker.person.fullName(),
+            username: faker.internet.userName(),
+            password: faker.internet.password()
+        }).save())._id;
+
+        await new TaskEntity({
+            hospital_id: hospitalId,
+            doctor_id: doctorId,
+            care_category: 1,
+            patient_name: expectedPatientName,
+            patient_biological_gender: faker.helpers.arrayElement(['M', 'F', 'N']),
+            status: faker.helpers.arrayElement(['A', 'E', 'C'])
+        }).save();
+
+        for (let i = 0; i < 500; i++) {
+            await new TaskEntity({
+                hospital_id: hospitalId,
+                doctor_id: doctorId,
+                care_category: 1,
+                patient_name: faker.person.fullName(),
+                patient_biological_gender: faker.helpers.arrayElement(['M', 'F', 'N']),
+                status: faker.helpers.arrayElement(['A', 'E', 'C'])
+            }).save();
+        }
+
+        const payload = {
+            search: expectedPatientName
+        };
+
+        const response = await request(app as Express)
+            .get('/api/task')
+            .send(payload)
+            .set('Content-Type', 'application/json');
+
+        expect(response.status).toBe(200);
+        expect(response.body.total).toBe(expectedTotal);
+        expect(response.body.tasks.length).toBe(expectedTotal);
+        expect(response.body.tasks.map((task: ITask) => task.patient_name)).toContain(expectedPatientName);
     });
 });

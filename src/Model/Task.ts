@@ -4,6 +4,7 @@ class Task {
     static async filterTask(
         page: number,
         pageSize: number,
+        search?: string,
         careCategories?: CareCategory[],
         statuses?: Status[]
     ): Promise<{ total: number; tasks: ITask[]; }> {
@@ -15,6 +16,14 @@ class Task {
 
         if (statuses) {
             filter.status = { $in: statuses };
+        }
+
+        if (search) {
+            const regexPattern = search
+                .split(' ')
+                .map(term => `\\b${term.replace(/[\u0300-\u036f]/g, '')}\\b`)
+                .join('|');
+            filter.patient_name = { $regex: new RegExp(regexPattern, 'i') };
         }
 
         const total = await TaskEntity.countDocuments(filter);

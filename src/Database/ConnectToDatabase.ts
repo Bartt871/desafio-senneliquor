@@ -10,9 +10,7 @@ const ConnectToDatabase = async () => {
                 password: process.env.DB_PASSWORD
             }
         });
-        console.log('Conectado ao MongoDB!');
     } catch (error) {
-        console.error('Erro ao conectar ao MongoDB:', error);
         throw error;
     }
 };

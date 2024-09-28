@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
 import { verifyToken } from '../../src/Service/JwtToken';
 import { DoctorSession } from '../../src/Types/Session';
-import { app, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
+import { app, clearDatabase, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
 
 import bcrypt from 'bcrypt';
 import request from 'supertest';
@@ -14,6 +14,8 @@ afterAll(async () => await closeConnection());
 beforeEach(async () => await recreateApp());
 
 describe('StartSession', () => {
+    beforeEach(async () => await clearDatabase());
+
     it('StartSession_success', async () => {
         const password = faker.internet.password({ length: 8 });
 
