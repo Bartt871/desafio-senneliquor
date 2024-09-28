@@ -1,31 +1,19 @@
-import { appCreator } from '../../src/appCreator';
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
 import { verifyToken } from '../../src/service/jwtToken';
 import { DoctorSession } from '../../src/types/session';
+import { app, closeConnection, recreateApp, setupApp } from '../../src/jestSetup';
 
 import bcrypt from 'bcrypt';
 import request from 'supertest';
-import mongoose from 'mongoose';
 import DoctorEntity from '../../src/entity/doctorEntity';
 import BadRequestException from '../../src/exception/badRequestException';
 
-let app: Express | undefined = undefined;
-
-beforeAll(async () => {
-    jest.setTimeout(Infinity);
-    app = await appCreator();
-});
-
-afterAll(async () => {
-    await mongoose.connection.close();
-});
+beforeAll(async () => await setupApp());
+afterAll(async () => await closeConnection());
+beforeEach(async () => await recreateApp());
 
 describe('StartSession', () => {
-    beforeAll(async () => {
-        await DoctorEntity.deleteMany({});
-    });
-
     it('StartSession_success', async () => {
         const password = faker.internet.password({ length: 8 });
 

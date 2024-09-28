@@ -1,10 +1,11 @@
 import { Router } from "express";
 
-import StartSession from "../action/Session/StartSession";
-import { StartSessionMiddleware } from "../middleware/validation/Session/startSessionMiddleware";
+import noAuthRoutes from "./routes-no-auth";
+import taskRoutes from "./routes-task";
 
 const router = Router();
 
-router.post('/no-auth', StartSessionMiddleware, StartSession);
+router.use('/no-auth', noAuthRoutes);
+router.use('/task', taskRoutes);
 
 export default router;
