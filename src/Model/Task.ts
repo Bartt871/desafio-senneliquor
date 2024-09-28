@@ -1,14 +1,16 @@
+import { Schema } from "mongoose";
 import TaskEntity, { CareCategory, ITask, Status } from "../Entity/TaskEntity";
 
 class Task {
     static async filterTask(
         page: number,
         pageSize: number,
+        doctorId: string,
         search?: string,
         careCategories?: CareCategory[],
         statuses?: Status[]
     ): Promise<{ total: number; tasks: ITask[]; }> {
-        const filter: any = {};
+        const filter: any = { doctor_id: doctorId };
 
         if (careCategories) {
             filter.care_category = { $in: careCategories };

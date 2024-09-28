@@ -1,3 +1,4 @@
+import mongoose, { Schema } from "mongoose";
 import { CareCategory, Status } from "../../Entity/TaskEntity";
 import asyncHandler from "../../Handler/AsyncHandler";
 import Task from "../../Model/Task";
@@ -20,7 +21,16 @@ const FilterTask = asyncHandler<FilterTaskBody>(
             page_size: pageSize
         } = request.body;
 
-        const filteredTasks = await Task.filterTask(page, pageSize, search, careCategories, statuses);
+        const { logged_id: doctorId } = request.session;
+
+        const filteredTasks = await Task.filterTask(
+            page,
+            pageSize,
+            doctorId as string,
+            search,
+            careCategories,
+            statuses
+        );
 
         response.status(200).json(filteredTasks);
     }

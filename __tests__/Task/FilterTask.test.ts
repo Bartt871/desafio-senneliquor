@@ -1,6 +1,8 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
 import { app, clearDatabase, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
+import { generateToken } from '../../src/Service/JwtToken';
+import { DoctorSession } from '../../src/Types/Session';
 
 import request from 'supertest';
 import TaskEntity, { ITask } from '../../src/Entity/TaskEntity';
@@ -23,16 +25,41 @@ describe('FilterTask', () => {
             longitude: faker.location.longitude()
         }).save())._id;
 
-        const doctorId = (await new DoctorEntity({
+        const doctor = await new DoctorEntity({
             name: faker.person.fullName(),
             username: faker.internet.userName(),
             password: faker.internet.password()
-        }).save())._id;
+        }).save();
+
+        const anotherDoctor = await new DoctorEntity({
+            name: faker.person.fullName(),
+            username: faker.internet.userName(),
+            password: faker.internet.password()
+        }).save();
 
         for (let i = 0; i < expectedTotal; i++) {
             await new TaskEntity({
                 hospital_id: hospitalId,
-                doctor_id: doctorId,
+                doctor_id: doctor._id,
+                care_category: 1,
+                patient_name: faker.person.fullName(),
+                patient_biological_gender: 'N',
+                status: 'A'
+            }).save();
+
+            // from another doctor
+            await new TaskEntity({
+                hospital_id: hospitalId,
+                doctor_id: anotherDoctor._id,
+                care_category: 1,
+                patient_name: faker.person.fullName(),
+                patient_biological_gender: 'N',
+                status: 'A'
+            }).save();
+
+            // not vinculed
+            await new TaskEntity({
+                hospital_id: hospitalId,
                 care_category: 1,
                 patient_name: faker.person.fullName(),
                 patient_biological_gender: 'N',
@@ -40,8 +67,10 @@ describe('FilterTask', () => {
             }).save();
         }
 
+        const token = generateToken({ logged_id: doctor._id.toString(), name: doctor.name, session_type: 'doctor' } as DoctorSession);
         const response = await request(app as Express)
             .get('/api/task')
+            .set('Authorization', token)
             .set('Content-Type', 'application/json');
 
         expect(response.status).toBe(200);
@@ -59,16 +88,16 @@ describe('FilterTask', () => {
             longitude: faker.location.longitude()
         }).save())._id;
 
-        const doctorId = (await new DoctorEntity({
+        const doctor = await new DoctorEntity({
             name: faker.person.fullName(),
             username: faker.internet.userName(),
             password: faker.internet.password()
-        }).save())._id;
+        }).save();
 
         for (let i = 0; i < expectedTotal; i++) {
             await new TaskEntity({
                 hospital_id: hospitalId,
-                doctor_id: doctorId,
+                doctor_id: doctor._id,
                 care_category: 1,
                 patient_name: faker.person.fullName(),
                 patient_biological_gender: 'N',
@@ -79,7 +108,7 @@ describe('FilterTask', () => {
         for (let i = 0; i < 5; i++) {
             await new TaskEntity({
                 hospital_id: hospitalId,
-                doctor_id: doctorId,
+                doctor_id: doctor._id,
                 care_category: 1,
                 patient_name: faker.person.fullName(),
                 patient_biological_gender: 'N',
@@ -90,7 +119,7 @@ describe('FilterTask', () => {
         for (let i = 0; i < 5; i++) {
             await new TaskEntity({
                 hospital_id: hospitalId,
-                doctor_id: doctorId,
+                doctor_id: doctor._id,
                 care_category: 1,
                 patient_name: faker.person.fullName(),
                 patient_biological_gender: 'N',
@@ -102,9 +131,11 @@ describe('FilterTask', () => {
             statuses: ['A']
         };
 
+        const token = generateToken({ logged_id: doctor._id.toString(), name: doctor.name, session_type: 'doctor' } as DoctorSession);
         const response = await request(app as Express)
             .get('/api/task')
             .send(payload)
+            .set('Authorization', token)
             .set('Content-Type', 'application/json');
 
         expect(response.status).toBe(200);
@@ -123,16 +154,16 @@ describe('FilterTask', () => {
             longitude: faker.location.longitude()
         }).save())._id;
 
-        const doctorId = (await new DoctorEntity({
+        const doctor = await new DoctorEntity({
             name: faker.person.fullName(),
             username: faker.internet.userName(),
             password: faker.internet.password()
-        }).save())._id;
+        }).save();
 
         for (let i = 0; i < expectedTotal; i++) {
             await new TaskEntity({
                 hospital_id: hospitalId,
-                doctor_id: doctorId,
+                doctor_id: doctor._id,
                 care_category: expectedCareCategory,
                 patient_name: faker.person.fullName(),
                 patient_biological_gender: faker.helpers.arrayElement(['M', 'F', 'N']),
@@ -143,7 +174,7 @@ describe('FilterTask', () => {
         for (let i = 0; i < 5; i++) {
             await new TaskEntity({
                 hospital_id: hospitalId,
-                doctor_id: doctorId,
+                doctor_id: doctor._id,
                 care_category: 2,
                 patient_name: faker.person.fullName(),
                 patient_biological_gender: faker.helpers.arrayElement(['M', 'F', 'N']),
@@ -154,7 +185,7 @@ describe('FilterTask', () => {
         for (let i = 0; i < 5; i++) {
             await new TaskEntity({
                 hospital_id: hospitalId,
-                doctor_id: doctorId,
+                doctor_id: doctor._id,
                 care_category: 2,
                 patient_name: faker.person.fullName(),
                 patient_biological_gender: faker.helpers.arrayElement(['M', 'F', 'N']),
@@ -166,9 +197,11 @@ describe('FilterTask', () => {
             care_categories: [expectedCareCategory]
         };
 
+        const token = generateToken({ logged_id: doctor._id.toString(), name: doctor.name, session_type: 'doctor' } as DoctorSession);
         const response = await request(app as Express)
             .get('/api/task')
             .send(payload)
+            .set('Authorization', token)
             .set('Content-Type', 'application/json');
 
         expect(response.status).toBe(200);
@@ -187,15 +220,15 @@ describe('FilterTask', () => {
             longitude: faker.location.longitude()
         }).save())._id;
 
-        const doctorId = (await new DoctorEntity({
+        const doctor = await new DoctorEntity({
             name: faker.person.fullName(),
             username: faker.internet.userName(),
             password: faker.internet.password()
-        }).save())._id;
+        }).save();
 
         await new TaskEntity({
             hospital_id: hospitalId,
-            doctor_id: doctorId,
+            doctor_id: doctor._id,
             care_category: 1,
             patient_name: expectedPatientName,
             patient_biological_gender: faker.helpers.arrayElement(['M', 'F', 'N']),
@@ -205,7 +238,7 @@ describe('FilterTask', () => {
         for (let i = 0; i < 500; i++) {
             await new TaskEntity({
                 hospital_id: hospitalId,
-                doctor_id: doctorId,
+                doctor_id: doctor._id,
                 care_category: 1,
                 patient_name: faker.person.fullName(),
                 patient_biological_gender: faker.helpers.arrayElement(['M', 'F', 'N']),
@@ -217,9 +250,11 @@ describe('FilterTask', () => {
             search: expectedPatientName
         };
 
+        const token = generateToken({ logged_id: doctor._id.toString(), name: doctor.name, session_type: 'doctor' } as DoctorSession);
         const response = await request(app as Express)
             .get('/api/task')
             .send(payload)
+            .set('Authorization', token)
             .set('Content-Type', 'application/json');
 
         expect(response.status).toBe(200);
