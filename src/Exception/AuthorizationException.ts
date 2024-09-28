@@ -1,4 +1,4 @@
-import ExceptionHanlder from "../handler/ExceptionHanlder";
+import ExceptionHanlder from "../Handler/ExceptionHanlder";
 
 export default class AuthorizationException extends ExceptionHanlder {
     static TOKEN_VERIFY_FAILED = new AuthorizationException("Falha ao validar o token");

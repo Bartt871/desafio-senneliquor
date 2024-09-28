@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import { Express } from 'express';
-import { appCreator } from './appCreator';
-import DoctorEntity from './entity/doctorEntity';
-import TaskEntity from './entity/taskEntity';
-import HospitalEntity from './entity/hospitalEntity';
+import { appCreator } from './AppCreator';
+import DoctorEntity from './Entity/DoctorEntity';
+import TaskEntity from './Entity/TaskEntity';
+import HospitalEntity from './Entity/HospitalEntity';
 
 export let app: Express | undefined = undefined;
 

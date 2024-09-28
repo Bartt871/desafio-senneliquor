@@ -1,8 +1,8 @@
 import express from 'express';
 import router from './routes/routes';
 import multer from 'multer';
-import ErrorHanlder from './handler/ErrorHandler';
-import ConnectToDatabase from './database/connectToDatabase';
+import ErrorHanlder from './Handler/ErrorHandler';
+import ConnectToDatabase from './Database/ConnectToDatabase';
 
 export const appCreator = async () => {
     const app = express();

@@ -1,6 +1,6 @@
-import { CareCategory, Status } from "../../entity/taskEntity";
-import asyncHandler from "../../handler/AsyncHandler";
-import Task from "../../model/task";
+import { CareCategory, Status } from "../../Entity/TaskEntity";
+import asyncHandler from "../../Handler/AsyncHandler";
+import Task from "../../Model/Task";
 
 export interface FilterTaskBody {
     statuses?: Status[];

@@ -1,4 +1,4 @@
-import TaskEntity, { CareCategory, ITask, Status } from "../entity/taskEntity";
+import TaskEntity, { CareCategory, ITask, Status } from "../Entity/TaskEntity";
 
 class Task {
     static async filterTask(

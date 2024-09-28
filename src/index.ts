@@ -1,4 +1,4 @@
-import { appCreator } from "./appCreator";
+import { appCreator } from "./AppCreator";
 
 const port = process.env.SERVER_PORT ?? 8080;
 

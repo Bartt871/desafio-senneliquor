@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import { FilterTaskMiddleware } from "../middleware/validation/Task/filterTaskMiddleware";
-import FilterTask from "../action/Task/FilterTask";
+import { FilterTaskMiddleware } from "../Middleware/Validation/Task/FilterTaskMiddleware";
+import FilterTask from "../Action/Task/FilterTask";
 
 const taskRoutes = Router();
 

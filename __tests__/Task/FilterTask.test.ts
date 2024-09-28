@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
-import { app, closeConnection, recreateApp, setupApp } from '../../src/jestSetup';
+import { app, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
 
 import request from 'supertest';
-import TaskEntity, { ITask } from '../../src/entity/taskEntity';
-import DoctorEntity from '../../src/entity/doctorEntity';
-import HospitalEntity from '../../src/entity/hospitalEntity';
+import TaskEntity, { ITask } from '../../src/Entity/TaskEntity';
+import DoctorEntity from '../../src/Entity/DoctorEntity';
+import HospitalEntity from '../../src/Entity/HospitalEntity';
 
 beforeAll(async () => await setupApp());
 afterAll(async () => await closeConnection());

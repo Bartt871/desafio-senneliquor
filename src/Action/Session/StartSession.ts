@@ -1,8 +1,8 @@
-import Doctor from "../../model/doctor";
-import asyncHandler from "../../handler/AsyncHandler";
+import Doctor from "../../Model/Doctor";
+import asyncHandler from "../../Handler/AsyncHandler";
 
-import { generateToken } from "../../service/jwtToken";
-import { DoctorSession } from "../../types/session";
+import { generateToken } from "../../Service/JwtToken";
+import { DoctorSession } from "../../Types/Session";
 
 export interface StartSessionBody {
     username: string;

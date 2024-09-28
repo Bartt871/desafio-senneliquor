@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { StartSessionBody } from '../../../action/Session/StartSession';
+import { StartSessionBody } from '../../../Action/Session/StartSession';
 
 import validator from 'validator';
-import ValidationException from '../../../exception/validationException';
+import ValidationException from '../../../Exception/ValidationException';
 
 export const StartSessionMiddleware = (
     request: Request<any, any, StartSessionBody>,

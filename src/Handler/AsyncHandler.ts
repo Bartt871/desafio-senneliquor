@@ -1,5 +1,5 @@
 import { Response, NextFunction, Request } from 'express';
-import { HttpControllerInterface } from '../action/Interface/HttpControllerInterface';
+import { HttpControllerInterface } from '../Action/Interface/HttpControllerInterface';
 
 const asyncHandler =
     <P = null>(action: HttpControllerInterface<P>) =>

@@ -1,4 +1,4 @@
-import ExceptionHanlder from "../handler/ExceptionHanlder";
+import ExceptionHanlder from "../Handler/ExceptionHanlder";
 
 export default class ValidationException extends ExceptionHanlder {
     public constructor(message: string) {

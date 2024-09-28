@@ -1,13 +1,13 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
-import { verifyToken } from '../../src/service/jwtToken';
-import { DoctorSession } from '../../src/types/session';
-import { app, closeConnection, recreateApp, setupApp } from '../../src/jestSetup';
+import { verifyToken } from '../../src/Service/JwtToken';
+import { DoctorSession } from '../../src/Types/Session';
+import { app, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
 
 import bcrypt from 'bcrypt';
 import request from 'supertest';
-import DoctorEntity from '../../src/entity/doctorEntity';
-import BadRequestException from '../../src/exception/badRequestException';
+import DoctorEntity from '../../src/Entity/DoctorEntity';
+import BadRequestException from '../../src/Exception/BadRequestException';
 
 beforeAll(async () => await setupApp());
 afterAll(async () => await closeConnection());

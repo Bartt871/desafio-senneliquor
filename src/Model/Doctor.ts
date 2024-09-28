@@ -1,6 +1,6 @@
-import DoctorEntity, { IDoctor } from "../entity/doctorEntity";
+import DoctorEntity, { IDoctor } from "../Entity/DoctorEntity";
 import bcrypt from 'bcrypt';
-import BadRequestException from "../exception/badRequestException";
+import BadRequestException from "../Exception/BadRequestException";
 
 class Doctor {
     static async login(username: string, password: string): Promise<IDoctor> {

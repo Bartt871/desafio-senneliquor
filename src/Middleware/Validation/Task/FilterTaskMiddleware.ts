@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { FilterTaskBody } from '../../../action/Task/FilterTask';
-import { CareCategory, Status } from '../../../entity/taskEntity';
-import ValidationException from '../../../exception/validationException';
+import { FilterTaskBody } from '../../../Action/Task/FilterTask';
+import { CareCategory, Status } from '../../../Entity/TaskEntity';
+import ValidationException from '../../../Exception/ValidationException';
 
 export const FilterTaskMiddleware = (
     request: Request<any, any, FilterTaskBody>,

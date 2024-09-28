@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import StartSession from "../action/Session/StartSession";
-import { StartSessionMiddleware } from "../middleware/validation/Session/startSessionMiddleware";
+import StartSession from "../Action/Session/StartSession";
+import { StartSessionMiddleware } from "../Middleware/Validation/Session/StartSessionMiddleware";
 
 const noAuthRoutes = Router();
 

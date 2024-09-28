@@ -1,4 +1,4 @@
-import HospitalEntity, { IHospital } from "../entity/hospitalEntity";
+import HospitalEntity, { IHospital } from "../Entity/HospitalEntity";
 
 class Hospital {
     static async insertHospital(hospitalData: Omit<IHospital, '_id' | 'createdAt' | 'updatedAt'>): Promise<IHospital> {
