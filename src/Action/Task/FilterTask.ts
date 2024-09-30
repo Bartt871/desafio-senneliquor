@@ -1,4 +1,3 @@
-import mongoose, { Schema } from "mongoose";
 import { CareCategory, Status } from "../../Entity/TaskEntity";
 import asyncHandler from "../../Handler/AsyncHandler";
 import Task from "../../Model/Task";
@@ -6,9 +5,9 @@ import Task from "../../Model/Task";
 export interface FilterTaskBody {
     search?: string;
     statuses?: Status[];
-    care_categories: CareCategory[];
-    page: number;
-    page_size: number;
+    care_categories?: CareCategory[];
+    page?: number;
+    page_size?: number;
 }
 
 const FilterTask = asyncHandler<FilterTaskBody>(
@@ -24,8 +23,8 @@ const FilterTask = asyncHandler<FilterTaskBody>(
         const { logged_id: doctorId } = request.session;
 
         const filteredTasks = await Task.filterTask(
-            page,
-            pageSize,
+            page as number,
+            pageSize as number,
             doctorId as string,
             search,
             careCategories,

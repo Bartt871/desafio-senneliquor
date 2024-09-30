@@ -4,44 +4,36 @@ import { CareCategory, Status } from '../../../Entity/TaskEntity';
 import ValidationException from '../../../Exception/ValidationException';
 
 export const FilterTaskMiddleware = (
-    request: Request<any, any, FilterTaskBody>,
+    request: Request<any, any, any, FilterTaskBody>,
     response: Response,
     next: NextFunction
 ): void => {
-    const {
-        statuses,
-        care_categories: careCategories,
-        page,
-        page_size: pageSize
-    } = request.body;
+    const params = request.query;
 
-    if (statuses) {
+    if (params.statuses) {
         const validStatuses: Status[] = ['A', 'E', 'C'];
 
-        const isValid = statuses.every(status => validStatuses.includes(status));
+        const isValid = params.statuses.every(status => validStatuses.includes(status));
 
         if (!isValid) {
             throw new ValidationException('O campo status contém valores inválidos');
         }
     }
 
-    if (careCategories) {
+    if (params.care_categories) {
         const validStatuses: CareCategory[] = [1, 2];
 
-        const isValid = careCategories.every(status => validStatuses.includes(status));
+        const isValid = params.care_categories.every(status => validStatuses.includes(status));
 
         if (!isValid) {
             throw new ValidationException('O campo categoria contém valores inválidos');
         }
     }
 
-    if (!page) {
-        request.body.page = 1;
-    }
-
-    if (!pageSize) {
-        request.body.page_size = 10;
-    }
+    params.page = params.page || 1;
+    params.page_size = params.page_size || 10;
+    
+    request.body = params;
 
     next();
 };

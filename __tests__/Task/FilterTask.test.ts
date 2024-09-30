@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
 import { app, clearDatabase, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
 import { generateToken } from '../../src/Service/JwtToken';
-import { DoctorSession } from '../../src/Types/Session';
+import { DoctorSession } from '../../src/@types/Session';
 
 import request from 'supertest';
 import TaskEntity, { ITask } from '../../src/Entity/TaskEntity';

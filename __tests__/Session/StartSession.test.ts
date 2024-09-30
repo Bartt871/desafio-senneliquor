@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Express } from 'express';
 import { verifyToken } from '../../src/Service/JwtToken';
-import { DoctorSession } from '../../src/Types/Session';
+import { DoctorSession } from '../../src/@types/Session';
 import { app, clearDatabase, closeConnection, recreateApp, setupApp } from '../../src/JestSetup';
 
 import bcrypt from 'bcrypt';

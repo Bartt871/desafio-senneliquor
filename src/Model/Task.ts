@@ -23,8 +23,9 @@ class Task {
         if (search) {
             const regexPattern = search
                 .split(' ')
-                .map(term => `\\b${term.replace(/[\u0300-\u036f]/g, '')}\\b`)
+                .map(term => term.replace(/[\u0300-\u036f]/g, ''))
                 .join('|');
+
             filter.patient_name = { $regex: new RegExp(regexPattern, 'i') };
         }
 

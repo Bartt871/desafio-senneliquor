@@ -6,11 +6,9 @@ export const generateToken = (params: string | Buffer | object, options?: jwt.Si
 };
 
 export const verifyToken = <T>(token: string): T => {
-    const processedToken = jwt.verify(token, process.env.JWT_SECRET ?? 'Devel') as T;
-
-    if (!processedToken) {
+    try {
+        return jwt.verify(token, process.env.JWT_SECRET ?? 'Devel') as T;
+    } catch (e) {
         throw AuthorizationException.TOKEN_VERIFY_FAILED;
     }
-
-    return processedToken;
 }

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "../../Service/JwtToken";
-import { BaseSession } from "../../Types/Session";
+import { BaseSession } from "../../@types/Session";
 
 const SessionMiddleware = (request: Request, response: Response, next: NextFunction) => {
     const token = request.header('Authorization');
