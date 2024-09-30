@@ -1,5 +1,3 @@
-[[_TOC_]]
-
 ## Como Subir o Projeto
 
 ### Requisitos
