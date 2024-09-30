@@ -1,9 +1,6 @@
 services:
     node:
         image: will871/node:1.0
-        build: 
-            context: .
-            dockerfile: Dockerfile
         container_name: desafio-senneliquor-node
         environment:
             - APP_SECRET=development
